@@ -1,3 +1,17 @@
+<?php
+
+if (isset($_FILES['media'])) {
+
+	if ($_FILES['media']['name'][0] != "") {
+		$countfiles = count($_FILES['media']['name']);
+	}
+	else {
+		$countfiles = 0;
+	}
+	var_dump($countfiles);
+}
+
+ ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -38,6 +52,10 @@
       </span>
     </div>
   </nav>
+  <form action="#" method="post" enctype="multipart/form-data" role="form">
+    <input id="file-input"  accept="image/*" name="media[]" type="file" multiple="multiple"  />
+		<button class="btn btn-primary" type="submit">Poster</button>
+  </form>
 
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
