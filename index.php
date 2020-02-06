@@ -9,7 +9,7 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark align-items-center" style="background-color: #3B5999;">
     <a class="navbar-brand py-0" href="./index.php" >
-      <img src="./assets/img/brand-logo-light.png" width="38" height="38" alt="bootstrapLogo">
+      <img src="./assets/img/brand/brand-logo-light.png" width="38" height="38" alt="bootstrapLogo">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
