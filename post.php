@@ -1,14 +1,27 @@
 <?php
+ini_set('upload_max_filesize', '70M');
+ini_set('post_max_size', '70M');
+
 require_once "./model/crud.php";
+$temp = "";
 if (isset($_POST["submit"])) {
 	$images = filter_input(INPUT_POST, "images", FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
 	$comment = filter_input(INPUT_POST, "comment", FILTER_SANITIZE_STRING);
-	$nom = md5($_FILES['images']['name'][0] . date("Y-m-d h:i:sa") . sha1(uniqid())) . "." . explode('/', $_FILES['images']['type'][0])[1];
-		$lien = "./assets/img/upload/" . $nom;
-	  $resultat = move_uploaded_file($_FILES['images']['tmp_name'][0],$lien);
-		AddPost($comment);
-}
 
+	$temp = AddPost($comment);
+	for ($i=0; $i < count($_FILES['images']['name']); $i++) {
+			$nom = md5($_FILES['images']['name'][$i] . date("Y-m-d h:i:sa") . sha1(uniqid())) . "." . explode('/', $_FILES['images']['type'][$i])[1];
+			$lien = "./assets/img/upload/" . $nom;
+		  $resultat = move_uploaded_file($_FILES['images']['tmp_name'][$i],$lien);
+
+			if ($_FILES['images']['size'][$i]*(10**-6)< 4) {
+				AddImage($_FILES['images']['type'][$i], $nom, $temp);
+			}
+			else {
+				echo "Fichier trop supérieur à 70M";
+			}
+	}
+}
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -52,7 +65,7 @@ if (isset($_POST["submit"])) {
 	</nav>
 	<form action="#" method="post" class="container py-3" enctype="multipart/form-data">
 		<div class="form-group">
-			<label for="comment">Commentaire</label>
+			<label for="comment">Commentaire - <?=$temp?></label>
 			<textarea id="comment" class="form-control" name="comment" rows="8" cols="80" required></textarea>
 		</div>
 		<div class="form-group">
