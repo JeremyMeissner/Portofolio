@@ -19,25 +19,3 @@ function Connect(){
     }
     return $myDb;
 }
-function Insert($sql, $data){
-    try{
-        $query = Connect()->prepare($sql);
-
-        $query->execute($data);
-    }
-    catch (Exception $e) {
-        die("Impossible de se connecter à la base ". $e->getMessage());
-    }
-}
-
-function Select($sql, $data){
-    try{
-        $query = Connect()->prepare($sql);
-
-        $query->execute($data);
-        return $query->fetchAll(PDO::FETCH_ASSOC);
-    }
-    catch (Exception $e) {
-        die("Impossible de se connecter à la base ". $e->getMessage());
-    }
-}

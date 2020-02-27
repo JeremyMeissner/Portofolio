@@ -10,6 +10,7 @@ if (isset($_POST["submit"])) {
 
 	$temp = AddPost($comment);
 	for ($i=0; $i < count($_FILES['images']['name']); $i++) {
+		if (explode('/', $_FILES['images']['type'][$i])[0] == "images") {
 			$nom = md5($_FILES['images']['name'][$i] . date("Y-m-d h:i:sa") . sha1(uniqid())) . "." . explode('/', $_FILES['images']['type'][$i])[1];
 			$lien = "./assets/img/upload/" . $nom;
 		  $resultat = move_uploaded_file($_FILES['images']['tmp_name'][$i],$lien);
@@ -20,6 +21,7 @@ if (isset($_POST["submit"])) {
 			else {
 				echo "Fichier trop supérieur à 70M";
 			}
+		}
 	}
 }
 ?>
@@ -65,7 +67,7 @@ if (isset($_POST["submit"])) {
 	</nav>
 	<form action="#" method="post" class="container py-3" enctype="multipart/form-data">
 		<div class="form-group">
-			<label for="comment">Commentaire - <?=$temp?></label>
+			<label for="comment">Commentaire</label>
 			<textarea id="comment" class="form-control" name="comment" rows="8" cols="80" required></textarea>
 		</div>
 		<div class="form-group">
