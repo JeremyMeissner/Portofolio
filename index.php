@@ -1,3 +1,23 @@
+<?php
+require_once "./model/crud.php";
+$dbPosts = SelectAllPosts();
+$posts = "";
+$post = "";
+foreach ($dbPosts as $key => $value) {
+  $images = "";
+  foreach ($value["media"] as $mediaKey => $mediaValue) {
+    $images .= '<img src="./assets/img/upload/' . $mediaValue["nomMedia"] . '" class="card-img-top" alt="' . $mediaValue["nomMedia"] . '">';
+  }
+  $post = '
+  <figure class="figure jumbotron col-12">
+  ' . $images . '
+    <figcaption class="figure-caption"> Date de création: ' . $value["creationDate"] . ',  Date de modification: ' . $value["modificationDate"] . '</figcaption>
+    <figcaption class="figure-caption">' . $value["commentaire"] . '</figcaption>
+</figure>';
+  $posts .= $post;
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -41,6 +61,10 @@
   <div class="jumbotron jumbotron-fluid">
     <div class="container">
       <h1 class="display-4">Welcome</h1>
+    </div>
+    <br><br>
+    <div class="container">
+      <?=$posts?>
     </div>
   </div>
 

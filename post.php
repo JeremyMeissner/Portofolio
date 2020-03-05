@@ -10,17 +10,16 @@ if (isset($_POST["submit"])) {
 
 	$temp = AddPost($comment);
 	for ($i=0; $i < count($_FILES['images']['name']); $i++) {
-		if (explode('/', $_FILES['images']['type'][$i])[0] == "images") {
-			$nom = md5($_FILES['images']['name'][$i] . date("Y-m-d h:i:sa") . sha1(uniqid())) . "." . explode('/', $_FILES['images']['type'][$i])[1];
-			$lien = "./assets/img/upload/" . $nom;
-		  $resultat = move_uploaded_file($_FILES['images']['tmp_name'][$i],$lien);
-
-			if ($_FILES['images']['size'][$i]*(10**-6)< 4) {
+		if ($_FILES['images']['error'][$i] == 0) {
+			if (explode('/', $_FILES['images']['type'][$i])[0] == "image") {
+				$nom = md5($_FILES['images']['name'][$i] . date("Y-m-d h:i:sa") . sha1(uniqid())) . "." . explode('/', $_FILES['images']['type'][$i])[1];
+				$lien = "./assets/img/upload/" . $nom;
+				$resultat = move_uploaded_file($_FILES['images']['tmp_name'][$i],$lien);
 				AddImage($_FILES['images']['type'][$i], $nom, $temp);
 			}
-			else {
-				echo "Fichier trop supérieur à 70M";
-			}
+		}
+		else {
+			echo "Fichier trop grand";
 		}
 	}
 }
