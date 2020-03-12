@@ -11,7 +11,8 @@ if (isset($_POST["submit"])) {
 	$temp = AddPost($comment);
 	for ($i=0; $i < count($_FILES['images']['name']); $i++) {
 		if ($_FILES['images']['error'][$i] == 0) {
-			if (explode('/', $_FILES['images']['type'][$i])[0] == "image") {
+			$extension = explode('/', $_FILES['images']['type'][$i])[0];
+			if ($extension == "image" || $extension == "video" || $extension == "audio") {
 				$nom = md5($_FILES['images']['name'][$i] . date("Y-m-d h:i:sa") . sha1(uniqid())) . "." . explode('/', $_FILES['images']['type'][$i])[1];
 				$lien = "./assets/img/upload/" . $nom;
 				$resultat = move_uploaded_file($_FILES['images']['tmp_name'][$i],$lien);
@@ -71,7 +72,7 @@ if (isset($_POST["submit"])) {
 		</div>
 		<div class="form-group">
 			<label for="images">Image</label>
-			<input id="images" class="form-control" accept="image/*" name="images[]" type="file" multiple="multiple" required/>
+			<input id="images" class="form-control" name="images[]" type="file" multiple="multiple" required/>
 		</div>
 		<button name="submit" class="btn btn-primary" type="submit">Poster</button>
 	</form>
